@@ -28,8 +28,8 @@ var import_envalid = require("envalid");
 import_dotenv.default.config();
 var env = (0, import_envalid.cleanEnv)(process.env, {
   NODE_ENV: (0, import_envalid.str)({ devDefault: (0, import_envalid.testOnly)("test"), choices: ["development", "production", "test"] }),
-  HOST: (0, import_envalid.host)({ devDefault: (0, import_envalid.testOnly)("localhost") }),
-  PORT: (0, import_envalid.port)({ devDefault: (0, import_envalid.testOnly)(3e3) }),
+  // HOST: host({ devDefault: testOnly("localhost") }),
+  // PORT: port({ devDefault: testOnly(3000) }),
   CORS_ORIGIN: (0, import_envalid.str)({ devDefault: (0, import_envalid.testOnly)("http://localhost:3000") }),
   COMMON_RATE_LIMIT_MAX_REQUESTS: (0, import_envalid.num)({ devDefault: (0, import_envalid.testOnly)(1e3) }),
   COMMON_RATE_LIMIT_WINDOW_MS: (0, import_envalid.num)({ devDefault: (0, import_envalid.testOnly)(1e3) })
@@ -394,9 +394,9 @@ app.use(openAPIRouter);
 app.use(errorHandler_default());
 
 // src/index.ts
-var server = app.listen(env.PORT, () => {
-  const { NODE_ENV, HOST, PORT } = env;
-  logger.info(`Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`);
+var server = app.listen(() => {
+  const { NODE_ENV } = env;
+  logger.info(`Server (${NODE_ENV}) running`);
 });
 var onCloseSignal = () => {
   logger.info("sigint received, shutting down");
