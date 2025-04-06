@@ -1,4 +1,19 @@
 {
 	"version": 2,
-	"rewrites": [{ "source": "/(.*)", "destination": "/dist" }]
+	"builds": [
+		{
+			"src": "package.json",
+			"use": "@vercel/static-build"
+		},
+		{
+			"src": "dist",
+			"use": "@vercel/node"
+		}
+	],
+	"routes": [
+		{
+			"src": "/(.*)",
+			"dest": "dist"
+		}
+	]
 }
